@@ -1,4 +1,8 @@
 - hosts: all
+  vars:
+    user: hcvst
+    config_repo: https://bitbucket.org/hc/ubuntuconfig
+    config_dir: config.git
   tasks:
   - name: install ubuntu packages
     sudo: yes
@@ -12,4 +16,13 @@
       - autojump
   - name: Set zsh as default shell
     sudo: yes
-    user: name=$user shell=/bin/zsh 
+    user: name={{ user }} shell=/bin/zsh 
+  - name: Clone my configuration (dotfiles, ...)
+    shell: git clone --no-checkout {{ config_repo }} {{ config_dir }} 
+    args:
+      chdir: /home/{{ user }} 
+      creates: /home/{{ user }}/{{ config_dir }} 
+  - name: Configure my configuration repo 
+    shell: git config core.worktree "../../" chdir=/home/{{ user }}/{{ config_dir }}
+  - name: Fetchq my configuration files 
+    shell: git reset --hard origin/master chdir=/home/{{ user }}/{{ config_dir }}

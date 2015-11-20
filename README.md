@@ -1,4 +1,4 @@
-# laptop-setup
+# Ubuntu laptop-setup
 
 ```
 sudo apt-get install -y git python-pip
