@@ -14,9 +14,15 @@
       - i3
       - zsh
       - autojump
+      - fortune-mod
+      - fortunes-de
+      - cowsay
+      - lolcat
   - name: Set zsh as default shell
     sudo: yes
     user: name={{ user }} shell=/bin/zsh 
+  - name: Clone oh-my-zsh repo
+    git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh
   - name: Clone my configuration (dotfiles, ...)
     shell: git clone --no-checkout {{ config_repo }} {{ config_dir }} 
     args:
