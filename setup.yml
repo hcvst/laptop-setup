@@ -24,5 +24,5 @@
       creates: /home/{{ user }}/{{ config_dir }} 
   - name: Configure my configuration repo 
     shell: git config core.worktree "../../" chdir=/home/{{ user }}/{{ config_dir }}
-  - name: Fetchq my configuration files 
+  - name: Fetch my configuration files 
     shell: git reset --hard origin/master chdir=/home/{{ user }}/{{ config_dir }}
