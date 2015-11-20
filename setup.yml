@@ -9,6 +9,7 @@
       - vim
       - i3
       - zsh
+      - autojump
   - name: Set zsh as default shell
     sudo: yes
     user: name=$user shell=/bin/zsh 
