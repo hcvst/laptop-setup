@@ -1,8 +1,16 @@
 - hosts: all
+  sudo: yes
   vars:
     user: hcvst
     config_repo: https://bitbucket.org/hc/ubuntuconfig
     config_dir: config.git
+
+  pre_tasks:
+
+  roles:
+          - ansible-role-docker-ubuntu
+          - malk.java8-oracle
+          - {role: jdauphant.intellij, intellij_url: "http://download.jetbrains.com/idea/ideaIU-{{intellij_version}}.tar.gz", intellij_version: 15.0.1}
   tasks:
   - name: install ubuntu packages
     sudo: yes
@@ -18,11 +26,12 @@
       - fortunes-de
       - cowsay
       - lolcat
+      - curl
   - name: Set zsh as default shell
     sudo: yes
     user: name={{ user }} shell=/bin/zsh 
   - name: Clone oh-my-zsh repo
-    git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh
+    git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh update=no
   - name: Clone my configuration (dotfiles, ...)
     shell: git clone --no-checkout {{ config_repo }} {{ config_dir }} 
     args:
